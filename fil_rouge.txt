@@ -1,0 +1,33 @@
+# Journal de bord - Fil Rouge
+
+## Objectif de la séance
+Cette épreuve vise à évaluer la capacité du candidat à identifier, analyser, corriger et documenter une anomalie technique ou fonctionnelle dans une solution digitale. Elle doit permettre de vérifier la compréhension du fonctionnement global du projet, la maîtrise des outils de diagnostic, ainsi que la rigueur dans la mise en œuvre d’une correction.
+
+## Rendu attendu
+• Un rapport individuel au format PDF
+• Le rapport est remis au surveillant par email à l’issue des 4 heures
+
+## Consignes
+Pendant les 4 heures de l’épreuve, le candidat doit :
+• Identifier un problème réel ou potentiel dans sa solution (dysfonctionnement, faiblesse, non-conformité…)
+• Réaliser une analyse fonctionnelle et technique du problème identifié
+• Corriger ou améliorer l’élément concerné dans son propre code
+• Documenter l’ensemble de la démarche dans un rapport structuré
+• Utiliser des outils professionnels d’audit, de test ou d’analyse (si pertinent)
+
+Ce fichier recense toutes les modifications et actions effectuées sur le projet.
+
+## Fichiers modifiés ou ajoutés par rapport à la version 1
+Cette section liste tous les fichiers qui seront modifiés ou ajoutés durant l’épreuve, en plus de la version officielle (version 1). Elle sera complétée au fur et à mesure des actions.
+
+- fil_rouge.txt (ajouté)
+- .gitignore (modifié)
+
+## 2025-06-11
+- Initialisation du dépôt Git dans le projet.
+- Création du fichier `.gitignore` adapté à un projet Laravel + Node.js (exclusion des dossiers node_modules, vendor, fichiers .env, logs, etc).
+- Ajout du dossier `Annexes/` dans le `.gitignore` pour ne pas le versionner.
+- Premier commit : "Installation de gitignore".
+- Création du fichier `fil_rouge.txt` pour suivre les avancées du projet et permettre un rapport complet.
+
+Les prochaines modifications et actions seront ajoutées ici chronologiquement.
