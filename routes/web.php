@@ -56,6 +56,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('users', UserController::class);
     Route::resource('zones', ZoneController::class);
     Route::resource('reports', ReportController::class);
+    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
     Route::post('/zones/swap', [ZoneController::class, 'swap'])->name('zones.swap');
 });
 

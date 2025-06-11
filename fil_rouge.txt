@@ -1,27 +1,36 @@
 # Journal de bord - Fil Rouge
 
 ## Objectif de la séance
-Cette épreuve vise à évaluer la capacité du candidat à identifier, analyser, corriger et documenter une anomalie technique ou fonctionnelle dans une solution digitale. Elle doit permettre de vérifier la compréhension du fonctionnement global du projet, la maîtrise des outils de diagnostic, ainsi que la rigueur dans la mise en œuvre d’une correction.
+Cette épreuve vise à évaluer la capacité du candidat à identifier, analyser, corriger et documenter une anomalie technique ou fonctionnelle dans une solution digitale. Elle doit permettre de vérifier la compréhension du fonctionnement global du projet, la maîtrise des outils de diagnostic, ainsi que la rigueur dans la mise en œuvre d'une correction.
 
 ## Rendu attendu
 • Un rapport individuel au format PDF
-• Le rapport est remis au surveillant par email à l’issue des 4 heures
+• Le rapport est remis au surveillant par email à l'issue des 4 heures
 
 ## Consignes
-Pendant les 4 heures de l’épreuve, le candidat doit :
+Pendant les 4 heures de l'épreuve, le candidat doit :
 • Identifier un problème réel ou potentiel dans sa solution (dysfonctionnement, faiblesse, non-conformité…)
 • Réaliser une analyse fonctionnelle et technique du problème identifié
-• Corriger ou améliorer l’élément concerné dans son propre code
-• Documenter l’ensemble de la démarche dans un rapport structuré
-• Utiliser des outils professionnels d’audit, de test ou d’analyse (si pertinent)
+• Corriger ou améliorer l'élément concerné dans son propre code
+• Documenter l'ensemble de la démarche dans un rapport structuré
+• Utiliser des outils professionnels d'audit, de test ou d'analyse (si pertinent)
 
 Ce fichier recense toutes les modifications et actions effectuées sur le projet.
 
 ## Fichiers modifiés ou ajoutés par rapport à la version 1
-Cette section liste tous les fichiers qui seront modifiés ou ajoutés durant l’épreuve, en plus de la version officielle (version 1). Elle sera complétée au fur et à mesure des actions.
+Cette section liste tous les fichiers qui seront modifiés ou ajoutés durant l'épreuve, en plus de la version officielle (version 1). Elle sera complétée au fur et à mesure des actions.
 
 - fil_rouge.txt (ajouté)
-- .gitignore (modifié)
+- .gitignore (modifié : exclusion de la base de données SQLite)
+- Création de la branche "2.0-debut-premiere-correction"
+- app/Models/Blog.php (ajouté)
+- app/Http/Controllers/Admin/BlogController.php (ajouté)
+- database/migrations/2025_06_11_000001_create_blog_posts_table.php (ajouté)
+- resources/views/admin/blogs/index.blade.php (ajouté)
+- resources/views/admin/blogs/create.blade.php (ajouté)
+- resources/views/admin/blogs/edit.blade.php (ajouté)
+- app/Http/Controllers/BlogController.php (modifié)
+- routes/web.php (modifié)
 
 ## 2025-06-11
 - Initialisation du dépôt Git dans le projet.
@@ -29,5 +38,94 @@ Cette section liste tous les fichiers qui seront modifiés ou ajoutés durant l�
 - Ajout du dossier `Annexes/` dans le `.gitignore` pour ne pas le versionner.
 - Premier commit : "Installation de gitignore".
 - Création du fichier `fil_rouge.txt` pour suivre les avancées du projet et permettre un rapport complet.
+- Modification du `.gitignore` pour exclure la base de données SQLite (`database/database.sqlite`).
+- Création de la branche "2.0-debut-premiere-correction" pour débuter la première correction.
+
+### Mise en place de la gestion dynamique des blogs
+
+#### Analyse initiale
+- Constat : Les blogs sont actuellement gérés de manière statique dans le `BlogController` via des tableaux PHP.
+- Problématique : Impossibilité d'ajouter, modifier ou supprimer des blogs sans modifier directement le code.
+- Solution proposée : Créer une interface d'administration complète pour gérer dynamiquement les blogs.
+
+#### Création du modèle et de la migration
+- Création du modèle `Blog` dans `app/Models/Blog.php`
+  - Utilisation de la table `blog_posts`
+  - Ajout des champs fillable : title, slug, content, featured_image, meta_description, is_published, published_at, author_id
+  - Implémentation de la relation avec le modèle User (auteur)
+  - Ajout d'une méthode `getExcerpt()` pour générer des extraits d'articles
+
+- Création de la migration pour la table `blog_posts` dans `database/migrations/2025_06_11_000001_create_blog_posts_table.php`
+  - Champs : id, title, slug (unique), content, featured_image, meta_description, is_published, published_at, author_id, timestamps, soft_deletes
+
+#### Création du contrôleur d'administration
+- Création du contrôleur `Admin/BlogController.php` avec les méthodes CRUD complètes :
+  - index : Liste des blogs avec pagination
+  - create : Formulaire de création
+  - store : Enregistrement d'un nouveau blog
+  - edit : Formulaire d'édition
+  - update : Mise à jour d'un blog existant
+  - destroy : Suppression d'un blog
+
+#### Création des vues d'administration
+- Création des vues dans le dossier `resources/views/admin/blogs/` :
+  - `index.blade.php` : Liste des blogs avec actions (éditer, voir, supprimer)
+  - `create.blade.php` : Formulaire de création avec champs pour titre, contenu, image, meta description et statut de publication
+  - `edit.blade.php` : Formulaire d'édition similaire au formulaire de création
+
+#### Modification du contrôleur public
+- Mise à jour du `BlogController.php` pour utiliser les données de la base de données :
+  - Méthode `index()` : Récupération des blogs publiés, triés par date de publication
+  - Méthode `show()` : Récupération d'un blog spécifique par son ID
+  - Ajout d'une méthode privée `getDefaultArticles()` pour conserver les articles statiques en fallback
+
+#### Ajout des routes
+- Ajout des routes d'administration dans `routes/web.php` :
+  - `Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)` dans le groupe de routes admin
+
+#### Intégration dans l'interface d'administration
+- Modification du fichier `resources/views/layouts/admin.blade.php` pour ajouter un lien vers la gestion des blogs dans le menu de navigation
+- Ajout d'un lien "Blogs" avec la classe active conditionnelle basée sur la route actuelle
+- Ajout d'un widget de gestion des blogs dans le tableau de bord administrateur (`dashboard.blade.php`) avec deux boutons d'action :
+  - "Liste des blogs" qui mène à la liste complète des blogs
+  - "Nouveau blog" qui mène directement au formulaire de création
+
+#### Vérification de la base de données
+- Constat que la table `blog_posts` existe déjà dans la base de données avec tous les champs nécessaires
+- La migration créée n'a pas besoin d'être exécutée
+
+#### Vérification du HomeController
+- Le `HomeController` utilise déjà le `BlogController` pour récupérer les articles pour la page d'accueil
+- Comme le `BlogController` a été modifié pour utiliser les données dynamiques, le `HomeController` affichera automatiquement les blogs dynamiques
+
+#### Correction du problème de publication/dépublication des blogs
+- Identification d'un bug dans les méthodes `store()` et `update()` du contrôleur `Admin/BlogController.php` qui empêchait la publication et dépublication des blogs
+- Première tentative de correction :
+  - Modification de la validation du champ `is_published` de `boolean` à `nullable|boolean`
+  - Utilisation de `$request->boolean('is_published')` au lieu de `$request->has('is_published')`
+  - Sauvegarde de l'état de publication précédent et demandé dans des variables
+
+#### Solution finale pour le problème de publication
+- Approche plus directe et robuste pour la gestion de la publication :
+  - Retour à l'utilisation de `$request->has('is_published')` qui est plus fiable dans ce contexte
+  - Simplification de la logique de détection de l'état de publication
+  - Ajout d'une valeur explicite (`value="1"`) aux cases à cocher dans les formulaires
+  - Gestion spécifique de la date de publication lors de la première publication
+  - Conservation de la date de publication lors de la dépublication pour garder l'historique
+
+#### Correction du problème d'affichage des images
+- Identification d'un problème avec le stockage et l'affichage des images des blogs (erreur 404)
+- Tentative initiale de correction en utilisant le système de stockage de Laravel, mais problèmes persistants avec le lien symbolique
+
+#### Solution finale pour l'affichage des images
+- Nouvelle approche de stockage des images :
+  - Utilisation de `$file->move(public_path('images/blog'), $fileName)` au lieu de `store()` pour déplacer directement les fichiers dans le dossier public
+  - Création du dossier `public/images/blog` pour stocker les images
+  - Génération de noms de fichiers uniques basés sur l'horodatage
+- Modification de l'affichage des images dans les vues :
+  - Utilisation de `asset($blog->featured_image)` pour accéder directement aux images dans le dossier public
+- Gestion de la suppression des images :
+  - Utilisation de `unlink(public_path($blog->featured_image))` avec vérification préalable de l'existence du fichier
+  - Contournement des problèmes liés au lien symbolique de stockage dans Windows
 
 Les prochaines modifications et actions seront ajoutées ici chronologiquement.

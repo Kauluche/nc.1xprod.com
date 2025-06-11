@@ -37,3 +37,5 @@ build/
 
 # Dossier à ignorer
 Annexes/
+
+database/database.sqlite

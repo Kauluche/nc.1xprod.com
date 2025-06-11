@@ -15,10 +15,17 @@ class HomeController extends Controller
     {
         // Instancier le BlogController pour récupérer les articles
         $blogController = new BlogController();
-        $articles = $blogController->index()->getData()['articles'];
+        $articles = $blogController->index(true); // true pour récupérer les données directement
         
         // Limiter à 3 articles pour la page d'accueil
-        $latestArticles = array_slice($articles, 0, 3);
+        // Vérifier si $articles est une collection ou un tableau
+        if (is_object($articles) && method_exists($articles, 'toArray')) {
+            $articlesArray = $articles->toArray();
+        } else {
+            $articlesArray = $articles;
+        }
+        
+        $latestArticles = array_slice($articlesArray, 0, 3);
         
         return view('home', compact('latestArticles'));
     }
