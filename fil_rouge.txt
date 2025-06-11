@@ -128,4 +128,33 @@ Cette section liste tous les fichiers qui seront modifiés ou ajoutés durant l'
   - Utilisation de `unlink(public_path($blog->featured_image))` avec vérification préalable de l'existence du fichier
   - Contournement des problèmes liés au lien symbolique de stockage dans Windows
 
+#### Correction des erreurs de navigation et déconnexion
+- Identification d'un problème lors de la déconnexion lié à l'appel de `auth()->user()->isAdmin()` sans vérifier si l'utilisateur est connecté
+- Solution apportée :
+  - Ajout systématique de la vérification `auth()->check()` avant d'appeler des méthodes sur l'utilisateur dans la vue de navigation
+  - Modification du fichier `resources/views/layouts/navigation.blade.php` pour envelopper les références à `Auth::user()` dans des conditions `@if(auth()->check())`
+  - Protection des sections dropdown et responsive settings pour éviter les erreurs lors de la déconnexion
+
+#### Correction des erreurs 500 sur la page d'accueil
+- Identification de deux problèmes causant des erreurs 500 sur la page d'accueil :
+  1. Lorsqu'un blog est publié : Le `HomeController` essayait d'accéder à `getData()['articles']` sur un objet vue retourné par `BlogController->index()`
+  2. Lorsqu'il n'y a pas de blogs publiés : Le `HomeController` essayait d'appeler `toArray()` sur un tableau PHP standard (les articles par défaut)
+
+- Solution pour le premier problème :
+  - Modification du `BlogController` pour ajouter un paramètre `$returnData` à la méthode `index()`
+  - Si `$returnData` est `true`, la méthode retourne directement les articles au lieu de la vue
+  - Mise à jour du `HomeController` pour utiliser `$blogController->index(true)` au lieu de `$blogController->index()->getData()['articles']`
+
+- Solution pour le second problème :
+  - Ajout d'une vérification dans le `HomeController` pour déterminer si `$articles` est une collection Laravel ou un tableau PHP standard
+  - Utilisation de `is_object($articles) && method_exists($articles, 'toArray')` pour vérifier si la méthode `toArray()` est disponible
+  - Application de la méthode `toArray()` uniquement si elle existe, sinon utilisation directe du tableau
+
+#### Résultats des corrections
+- La page d'accueil s'affiche correctement dans tous les cas :
+  - Lorsqu'il y a des blogs publiés (affichage des blogs dynamiques)
+  - Lorsqu'il n'y a pas de blogs publiés (affichage des articles statiques par défaut)
+- La déconnexion fonctionne sans erreur, même lorsque l'utilisateur est sur une page qui vérifie les rôles
+- L'interface d'administration est cohérente et uniforme, avec un accès direct à la gestion des blogs
+
 Les prochaines modifications et actions seront ajoutées ici chronologiquement.
