@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+# Laravel
+/vendor/
+/.env
+Homestead.json
+Homestead.yaml
+/public/storage
+/storage/*.key
+.env.*.php
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+# OS files
+.DS_Store
+Thumbs.db
+# Composer
+composer.lock
+# Logs and temp files
+*.log
+/storage/logs/
+/storage/framework/cache/data/
+/storage/framework/sessions/
+/storage/framework/views/
+# NPM logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Build outputs
+dist/
+build/
+# Misc
+*.bak
+*.tmp
+
+# Dossier à ignorer
+Annexes/
