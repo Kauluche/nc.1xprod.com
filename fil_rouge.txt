@@ -23,13 +23,30 @@ Cette section liste tous les fichiers qui seront modifiés ou ajoutés durant l'
 - fil_rouge.txt (ajouté)
 - .gitignore (modifié : exclusion de la base de données SQLite)
 - Création de la branche "2.0-debut-premiere-correction"
+
+### Modèles et migrations
 - app/Models/Blog.php (ajouté)
-- app/Http/Controllers/Admin/BlogController.php (ajouté)
 - database/migrations/2025_06_11_000001_create_blog_posts_table.php (ajouté)
-- resources/views/admin/blogs/index.blade.php (ajouté)
-- resources/views/admin/blogs/create.blade.php (ajouté)
-- resources/views/admin/blogs/edit.blade.php (ajouté)
+
+### Contrôleurs
+- app/Http/Controllers/Admin/BlogController.php (ajouté)
 - app/Http/Controllers/BlogController.php (modifié)
+- app/Http/Controllers/HomeController.php (modifié)
+- app/Http/Controllers/DashboardController.php (modifié)
+
+### Vues
+- resources/views/admin/blogs/index.blade.php (ajouté)
+- resources/views/admin/blogs/create.blade.php (modifié)
+- resources/views/admin/blogs/edit.blade.php (modifié)
+- resources/views/dashboard.blade.php (modifié)
+- resources/views/home.blade.php (modifié)
+
+### Layouts et navigation
+- resources/views/layouts/app.blade.php (modifié)
+- resources/views/layouts/admin.blade.php (modifié)
+- resources/views/layouts/navigation.blade.php (modifié)
+
+### Routes
 - routes/web.php (modifié)
 
 ## 2025-06-11
@@ -156,5 +173,32 @@ Cette section liste tous les fichiers qui seront modifiés ou ajoutés durant l'
   - Lorsqu'il n'y a pas de blogs publiés (affichage des articles statiques par défaut)
 - La déconnexion fonctionne sans erreur, même lorsque l'utilisateur est sur une page qui vérifie les rôles
 - L'interface d'administration est cohérente et uniforme, avec un accès direct à la gestion des blogs
+
+### 11 juin 2025 - Ajustements du style et de l'interface d'administration des blogs
+
+#### Modifications apportées au tableau de bord administrateur
+- Amélioration de la visibilité du bloc de gestion des blogs dans le tableau de bord administrateur
+- Modification de la couleur du bouton "Ajouter" de vert à rouge pour améliorer la visibilité (problème de bouton blanc sur fond blanc)
+- Simplification des libellés des boutons d'action ("Liste" au lieu de "Liste des blogs" et "Ajouter" au lieu de "Nouveau blog")
+- Intégration des icônes FontAwesome directement dans les libellés des boutons pour une meilleure lisibilité
+
+#### Modernisation des pages d'édition et de création des blogs
+- Migration des pages de création et d'édition des blogs du layout 'layouts.admin' vers 'layouts.app'
+- Remplacement du style Bootstrap par Tailwind CSS pour une cohérence visuelle avec le reste de l'application
+- Amélioration de la présentation des formulaires avec des espaces plus aérés et une meilleure hiérarchie visuelle
+- Ajout d'icônes SVG dans les boutons d'action pour une meilleure expérience utilisateur
+- Optimisation de l'affichage des images téléchargées avec un style moderne (ombres, arrondis)
+- Amélioration de l'affichage des messages d'erreur et de validation
+
+#### Amélioration de la navigation
+- Ajout d'un lien permanent vers la gestion des blogs dans le header de navigation pour les administrateurs
+- Intégration du lien à la fois dans la navigation desktop et mobile pour une expérience cohérente sur tous les appareils
+- Mise en évidence du lien actif lors de la navigation dans les pages de gestion des blogs
+
+#### Résultats des ajustements
+- Meilleure visibilité des actions possibles sur les blogs directement depuis le tableau de bord
+- Interface plus cohérente avec le reste du site
+- Expérience utilisateur améliorée pour les administrateurs gérant le contenu du blog
+- Formulaires plus ergonomiques et visuellement attrayants
 
 Les prochaines modifications et actions seront ajoutées ici chronologiquement.

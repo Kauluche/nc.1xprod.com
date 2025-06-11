@@ -1,62 +1,90 @@
-@extends('layouts.admin')
+@extends('layouts.app')
+
+@section('title', 'Ajouter un article')
 
 @section('content')
-<div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Ajouter un article</h1>
-        <a href="{{ route('admin.blogs.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Retour à la liste
-        </a>
-    </div>
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Nouvel article</h6>
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Ajouter un article</h1>
+            <a href="{{ route('admin.blogs.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <svg class="-ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Retour à la liste
+            </a>
         </div>
-        <div class="card-body">
-            <form action="{{ route('admin.blogs.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="title">Titre <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required>
-                    @error('title')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
 
-                <div class="form-group">
-                    <label for="content">Contenu <span class="text-danger">*</span></label>
-                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10" required>{{ old('content') }}</textarea>
-                    @error('content')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg mb-6">
+                {{ session('success') }}
+            </div>
+        @endif
 
-                <div class="form-group">
-                    <label for="featured_image">Image à la une</label>
-                    <input type="file" class="form-control-file @error('featured_image') is-invalid @enderror" id="featured_image" name="featured_image">
-                    <small class="form-text text-muted">Formats acceptés : JPEG, PNG, JPG, GIF. Taille max : 2Mo</small>
-                    @error('featured_image')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Nouvel article</h3>
+            </div>
+            <div class="px-4 py-5 sm:p-6">
+                <form action="{{ route('admin.blogs.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="space-y-6">
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700">Titre <span class="text-red-500">*</span></label>
+                            <input type="text" id="title" name="title" value="{{ old('title') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('title') border-red-500 @enderror">
+                            @error('title')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                <div class="form-group">
-                    <label for="meta_description">Meta description</label>
-                    <textarea class="form-control @error('meta_description') is-invalid @enderror" id="meta_description" name="meta_description" rows="3">{{ old('meta_description') }}</textarea>
-                    <small class="form-text text-muted">Description courte pour les moteurs de recherche (max 255 caractères)</small>
-                    @error('meta_description')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                        <div>
+                            <label for="content" class="block text-sm font-medium text-gray-700">Contenu <span class="text-red-500">*</span></label>
+                            <textarea id="content" name="content" rows="10" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('content') border-red-500 @enderror">{{ old('content') }}</textarea>
+                            @error('content')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="is_published" name="is_published" value="1" {{ old('is_published') ? 'checked' : '' }}>
-                    <label class="form-check-label" for="is_published">Publier immédiatement</label>
-                </div>
+                        <div>
+                            <label for="featured_image" class="block text-sm font-medium text-gray-700">Image à la une</label>
+                            <div class="mt-1 flex items-center">
+                                <input type="file" id="featured_image" name="featured_image" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('featured_image') border-red-500 @enderror">
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">Formats acceptés : JPEG, PNG, JPG, GIF. Taille max : 2Mo</p>
+                            @error('featured_image')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
-            </form>
+                        <div>
+                            <label for="meta_description" class="block text-sm font-medium text-gray-700">Meta description</label>
+                            <textarea id="meta_description" name="meta_description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('meta_description') border-red-500 @enderror">{{ old('meta_description') }}</textarea>
+                            <p class="mt-2 text-sm text-gray-500">Description courte pour les moteurs de recherche (max 255 caractères)</p>
+                            @error('meta_description')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input type="checkbox" id="is_published" name="is_published" value="1" {{ old('is_published') ? 'checked' : '' }} class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="is_published" class="font-medium text-gray-700">Publier immédiatement</label>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                <svg class="-ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Enregistrer
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

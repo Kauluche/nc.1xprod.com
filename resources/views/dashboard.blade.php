@@ -450,6 +450,7 @@
                                     <p class="text-3xl font-bold text-blue-600">{{ $total_pharmacies }}</p>
                                 </div>
                             </div>
+                            
                             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                 <div class="p-6">
                                     <h3 class="text-lg font-semibold text-gray-900">Total Commandes</h3>
@@ -467,10 +468,10 @@
                                     <h3 class="text-lg font-semibold text-gray-900">Gestion des blogs</h3>
                                     <div class="mt-4 flex space-x-2">
                                         <a href="{{ route('admin.blogs.index') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                            <i class="fas fa-list mr-2"></i>Liste des blogs
+                                            <i class="fas fa-list mr-2">Liste</i>
                                         </a>
-                                        <a href="{{ route('admin.blogs.create') }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                            <i class="fas fa-plus mr-2"></i>Nouveau blog
+                                        <a href="{{ route('admin.blogs.create') }}" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                            <i class="fas fa-plus mr-2">ajouter</i> 
                                         </a>
                                     </div>
                                 </div>

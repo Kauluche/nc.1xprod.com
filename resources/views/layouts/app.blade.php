@@ -68,6 +68,9 @@
                                 <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
                                     {{ __('Rapports') }}
                                 </x-nav-link>
+                                <x-nav-link :href="route('admin.blogs.index')" :active="request()->routeIs('admin.blogs.*')">
+                                    {{ __('Blog') }}
+                                </x-nav-link>
                                 <x-nav-link :href="route('crm.admin.notifications.index')" :active="request()->routeIs('crm.admin.notifications.*')">
                                     {{ __('Notifications') }}
                                     @php
@@ -161,6 +164,9 @@
                         </x-responsive-nav-link>
                         <x-responsive-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
                             {{ __('Rapports') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link :href="route('admin.blogs.index')" :active="request()->routeIs('admin.blogs.*')">
+                            {{ __('Blog') }}
                         </x-responsive-nav-link>
                     @endif
                 </div>
