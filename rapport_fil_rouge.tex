@@ -1,0 +1,401 @@
+\documentclass[a4paper,12pt]{report}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\geometry{margin=2.5cm}
+\definecolor{naturacorpgreen}{RGB}{0,128,64}
+\definecolor{lightgray}{HTML}{F2F2F2}
+\titleformat{\section}{\normalfont\Large\bfseries\color{naturacorpgreen}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.3}
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyfoot[L]{Juin 2025}
+\fancyfoot[C]{NaturaCorp - Maintenance}
+\fancyfoot[R]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=naturacorpgreen,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={Rapport Fil Rouge - NaturaCorp},
+    pdfauthor={Sellier Luka},
+    pdfsubject={Maintenance et amélioration technique},
+    pdfkeywords={NaturaCorp, Maintenance, Correction, Laravel},
+    pdfstartview={FitH},
+    bookmarksnumbered=true,
+    pdfpagemode=UseOutlines
+}
+\begin{document}
+% Page de garde
+\thispagestyle{empty}
+\begin{center}
+    % Logos
+    \vspace*{0.5cm}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=5cm]{naturacorp.png}
+        \vspace{0.3cm}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=5cm]{esn.jpeg}
+        \vspace{0.3cm}
+    \end{minipage}
+    \vspace{1.5cm}
+    
+    % Titre
+    {\Huge\bfseries\color{naturacorpgreen}Maintenance corrective\par}
+    \vspace{1.5cm}
+    
+    % Sous-titre
+    {\LARGE\bfseries Rapport de correction \par}
+    \vspace{2cm}
+    
+    % Auteur
+    {\Large\bfseries Réalisé par :\par}
+    \vspace{0.3cm}
+    {\Large SELLIER Luka\par}
+    \vspace{0.5cm}
+    {\large Consultant Tech4Business\par}
+    \vspace{0.3cm}
+    {\large Bachelor 3 – Développement Web\par}
+    \vspace{0.3cm}
+    {\large École IRIS\par}
+    \vspace{1.5cm}
+    
+    % Informations projet
+    \begin{minipage}{0.8\textwidth}
+        \centering
+        \textbf{Projet de fin d'année}\\
+        \vspace{0.2cm}
+        Identification d'un bug, correction et documentation
+    \end{minipage}
+    \vspace{1.5cm}
+    
+    % Date
+    {\large Mars 2025\par}
+\vspace*{\fill}
+\begin{center}
+    \textbf{Livrable 4.2 : Maintenance corrective}
+\end{center}
+\end{center}
+
+\newpage
+
+% =====================
+\section{Introduction}
+\subsection{Contexte du projet}
+Le projet NaturaCorp comportait initialement une fonctionnalité de gestion et d'affichage de blogs côté administration. Cependant, suite à de nombreux dysfonctionnements (bugs critiques, erreurs d’affichage, impossibilité de publier ou de gérer les articles), cette fonctionnalité avait été retirée pour préserver la stabilité globale du site.
+
+\subsection{Objectif de la mission}
+L’objectif principal de cette mission de maintenance a été de remettre en service une gestion de blogs fiable, moderne et conforme aux standards Laravel, en repartant sur des bases totalement saines. Cela a nécessité la suppression complète de l’ancien module blog côté admin, puis la recréation de tous les fichiers nécessaires (contrôleurs, vues, modèles, routes, etc.), l’intégration dans la navigation, l’amélioration du style et la résolution de divers problèmes techniques.
+
+\subsection{Méthodologie}
+La démarche a été structurée ainsi :
+\begin{itemize}
+    \item Suppression de l’ancien code et analyse des besoins.
+    \item Recréation progressive de chaque composant (modèle, contrôleur, vues, routes).
+    \item Ajustement du header/navigation et du style pour cohérence avec le site.
+    \item Ajout d’un accès rapide depuis le tableau de bord admin.
+    \item Résolution des problèmes techniques rencontrés (gestion des images, publication, affichage page d’accueil).
+    \item Tests, validation et documentation continue de la démarche.
+\end{itemize}
+
+\subsection{Contexte du projet}
+Le candidat intervient dans le cadre d’une mission de maintenance d’une application développée en collectif (projet NaturaCorp). L’objectif est d’en améliorer la fiabilité, la robustesse et la performance en corrigeant un problème existant ou en traitant une faiblesse technique.
+
+\subsection{Présentation de la fonctionnalité concernée}
+Initialement, la gestion des blogs était dynamique, mais suite à de nombreux bugs et problèmes critiques, elle a été basculée en mode statique. Cette solution temporaire visait à "cacher la misère" et masquer les dysfonctionnements auprès des utilisateurs, en attendant une véritable correction structurelle du module blog.
+La fonctionnalité concernée par cette intervention est la gestion du blog de l’application. Initialement, les articles étaient gérés de façon statique, limitant la flexibilité et l’évolutivité du module. L’objectif a été de rendre cette gestion dynamique via une interface d’administration complète.
+
+\subsection{Objectif de l’épreuve et méthodologie choisie}
+L’objectif est d’identifier un problème réel ou potentiel, d’en faire l’analyse, d’apporter une correction et de documenter la démarche. La méthodologie suit le cycle : détection, analyse, correction, validation, bilan.
+
+% =====================
+\section{Détection du problème}
+\subsection{Constat initial}
+Avant intervention, la gestion des blogs côté admin était inutilisable et désactivée. Les principaux problèmes identifiés étaient :
+\begin{itemize}
+    \item L’ancien module blog était basé sur des fichiers et du code obsolètes, difficile à maintenir et à faire évoluer.
+    \item L’ajout, la modification ou la publication des blogs n’étaient plus possibles.
+    \item Le téléchargement et l’affichage des images ne fonctionnaient pas.
+    \item L’intégration dans la navigation et le style général du site étaient absents ou incohérents.
+    \item Après chaque tentative de correction, de nouveaux bugs apparaissaient (ex : erreur 500 sur la page d’accueil lors de la publication d’un blog).
+\end{itemize}
+\subsection{Conséquences}
+La suppression temporaire du module blog privait le site d’un canal de communication essentiel et nuisait à son image de fiabilité.
+
+\subsection{Comportement observé ou anomalie constatée}
+Lors de l’utilisation de la gestion de blogs, plusieurs problèmes ont été identifiés :
+\begin{itemize}
+    \item Impossibilité d’ajouter, modifier ou supprimer des blogs sans modifier le code (gestion statique).
+    \item Erreurs 500 sur la page d’accueil lors de la publication d’un blog ou en l’absence de blogs publiés.
+    \item Problèmes de stockage et d’affichage des images (erreur 404).
+    \item Problèmes de navigation lors de la déconnexion (erreur liée à l’appel de méthodes sur un utilisateur non connecté).
+\end{itemize}
+
+\subsection{Conséquences fonctionnelles ou techniques}
+Ces anomalies impactaient la fiabilité du module blog, la robustesse de l’application et l’expérience utilisateur.
+
+\subsection{Illustration du bug}
+\begin{itemize}
+    \item \textbf{Erreur 500} : Lorsqu’un blog était publié, le HomeController essayait d’accéder à des données non conformes.
+    \item \textbf{Images} : Les images uploadées n’étaient pas accessibles à cause d’un mauvais stockage.
+\end{itemize}
+
+% =====================
+\section{Analyse technique}
+\subsection{Analyse du code et des choix}
+L’analyse a révélé que la seule solution pérenne était de repartir de zéro : suppression de tous les anciens fichiers liés à la gestion des blogs côté admin, puis recréation complète selon les bonnes pratiques Laravel (modèle Eloquent, contrôleur CRUD, vues Blade, routes RESTful).
+
+\subsection{Extraits de code (avant correction)}
+\begin{verbatim}
+// Mauvaise gestion du champ is_published
+$blog->is_published = $request->boolean('is_published');
+// Mauvais stockage des images
+$file->store('images/blog');
+// Navigation sans vérification d’authentification
+@if(Auth::user()->isAdmin())
+\end{verbatim}
+
+\subsection{Points clés de la refonte}
+\begin{itemize}
+    \item Suppression des anciens fichiers et nettoyage du code.
+    \item Création d’un modèle Blog et d’une migration adaptée.
+    \item Mise en place d’un contrôleur CRUD complet côté admin.
+    \item Création/retravail des vues Blade pour l’admin (index, create, edit).
+    \item Ajout des routes nécessaires et intégration dans la navigation (header).
+    \item Refonte du style pour cohérence graphique.
+    \item Correction de la gestion des images (upload, stockage, affichage public).
+    \item Correction de la logique de publication (création et publication effectives).
+    \item Correction de l’affichage de la page d’accueil (adaptation au nouveau format de blog, suppression de l’erreur 500).
+\end{itemize}
+
+\subsection{Lecture et compréhension du code en cause}
+\begin{itemize}
+    \item \textbf{BlogController} : Gestion initiale statique, puis migration vers un modèle dynamique avec Eloquent.
+    \item \textbf{HomeController} : Mauvaise gestion des retours du BlogController, d’où l’erreur 500.
+    \item \textbf{Formulaires} : Gestion incorrecte de la case à cocher de publication.
+    \item \textbf{Navigation} : Absence de vérification de connexion avant d’appeler des méthodes sur l’utilisateur.
+\end{itemize}
+
+\subsection{Localisation du bug ou de la faiblesse}
+\begin{itemize}
+    \item \texttt{app/Http/Controllers/Admin/BlogController.php}
+    \item \texttt{app/Http/Controllers/HomeController.php}
+    \item \texttt{resources/views/layouts/navigation.blade.php}
+    \item \texttt{routes/web.php}
+\end{itemize}
+
+\subsection{Extraits de code (avant correction)}
+\begin{verbatim}
+// Mauvaise gestion du champ is_published
+$blog->is_published = $request->boolean('is_published');
+// Mauvais stockage des images
+$file->store('images/blog');
+// Navigation sans vérification d’authentification
+@if(Auth::user()->isAdmin())
+\end{verbatim}
+
+% =====================
+\section{Correction apportée}
+Avant de pouvoir remettre en service une gestion des blogs fiable et moderne, il a été nécessaire de supprimer l’ensemble des anciens fichiers de gestion de blog côté administration. Cette suppression a permis de repartir sur des bases saines, en recréant tous les fichiers nécessaires (contrôleurs, vues, routes, modèles) selon les bonnes pratiques Laravel.
+
+Nous avons également ajusté le header (navigation) pour intégrer le lien vers le blog, et retravaillé le style des pages de blog afin qu’il soit cohérent avec l’identité graphique du site web. Un accès direct à la gestion des blogs a été ajouté depuis le tableau de bord administrateur.
+
+Plusieurs problèmes techniques ont été rencontrés et résolus au fil du développement :
+\begin{itemize}
+    \item Après la correction initiale, le téléchargement des images ne fonctionnait pas. Il a fallu revoir le stockage des fichiers pour garantir leur accessibilité publique.
+    \item Il était possible de créer des blogs, mais impossible de les publier : la logique de publication a été corrigée pour permettre la mise en ligne effective des articles.
+    \item Enfin, l’affichage de la page d’accueil n’était pas compatible avec le nouveau format de blog. Lorsqu’un blog était publié, une erreur 500 apparaissait sur la page d’accueil. Ce problème a été analysé et corrigé pour assurer la stabilité du site.
+\end{itemize}
+
+\subsection{Description précise des modifications}
+\begin{itemize}
+    \item Passage à une gestion dynamique des blogs (CRUD complet via interface d’admin).
+    \item Correction de la gestion du champ \texttt{is_published} dans les formulaires et contrôleurs.
+    \item Utilisation de \texttt{$request->has('is_published')} pour fiabiliser la publication/dépublication.
+    \item Stockage des images dans \texttt{public/images/blog} avec génération de noms uniques.
+    \item Correction des liens d’accès aux images dans les vues.
+    \item Ajout de vérifications \texttt{auth()->check()} dans la navigation.
+    \item Intégration du module blog dans la navigation principale et le tableau de bord admin.
+    \item Refonte du style pour respect de la charte graphique.
+    \item Correction de la logique d’affichage sur la page d’accueil.
+\end{itemize}
+
+
+Voici ce qui a été fait concrètement pour résoudre chaque problème :
+\begin{itemize}
+    \item \textbf{Suppression et recréation complète du module blog côté admin} :
+    \begin{itemize}
+        \item Suppression des anciens fichiers obsolètes (contrôleurs, vues, routes).
+        \item Création de \texttt{app/Models/Blog.php} (nouveau modèle Eloquent).
+        \item Création de la migration \texttt{database/migrations/2025\_06\_11\_000001\_create\_blog\_posts\_table.php}.
+        \item Création et implémentation du contrôleur \texttt{app/Http/Controllers/Admin/BlogController.php} (CRUD complet).
+        \item Création des vues admin : \texttt{resources/views/admin/blogs/index.blade.php}, \texttt{create.blade.php}, \texttt{edit.blade.php}.
+    \end{itemize}
+    \item \textbf{Gestion des images} :
+    \begin{itemize}
+        \item Correction du stockage dans \texttt{public/images/blog} : modification du code d’upload dans le contrôleur.
+        \item Correction des liens d’accès dans les vues.
+    \end{itemize}
+    \item \textbf{Publication des blogs} :
+    \begin{itemize}
+        \item Correction de la logique dans \texttt{BlogController.php} (gestion du champ \texttt{is\_published}, dates de publication).
+        \item Correction des formulaires dans \texttt{create.blade.php} et \texttt{edit.blade.php}.
+    \end{itemize}
+    \item \textbf{Intégration/navigation/admin} :
+    \begin{itemize}
+        \item Modification de \texttt{resources/views/layouts/navigation.blade.php} pour ajouter le lien blog et sécuriser l’accès.
+        \item Ajout d’un accès direct depuis \texttt{resources/views/dashboard.blade.php}.
+        \item Ajout des routes dans \texttt{routes/web.php} (groupe admin, middleware auth).
+    \end{itemize}
+    \item \textbf{Affichage page d’accueil} :
+    \begin{itemize}
+        \item Correction de \texttt{app/Http/Controllers/HomeController.php} pour adapter la récupération et l’affichage des blogs au nouveau format (suppression de l’erreur 500).
+    \end{itemize}
+    \item \textbf{Refonte graphique} :
+    \begin{itemize}
+        \item Harmonisation du style des vues admin/blogs avec la charte du site.
+    \end{itemize}
+\end{itemize}
+
+
+Voici la liste exhaustive des fichiers principaux modifiés ou créés lors de la remise en place du module blog :
+\begin{itemize}
+    \item Après la correction initiale, le téléchargement des images ne fonctionnait pas. Il a fallu revoir le stockage des fichiers pour garantir leur accessibilité publique.
+    \item Il était possible de créer des blogs, mais impossible de les publier : la logique de publication a été corrigée pour permettre la mise en ligne effective des articles.
+    \item Enfin, l’affichage de la page d’accueil n’était pas compatible avec le nouveau format de blog. Lorsqu’un blog était publié, une erreur 500 apparaissait sur la page d’accueil. Ce problème a été analysé et corrigé pour assurer la stabilité du site.
+\end{itemize}
+
+\subsection{Description précise des modifications}
+\begin{itemize}
+    \item Passage à une gestion dynamique des blogs (CRUD complet via interface d’admin).
+    \item Correction de la gestion du champ \texttt{is_published} dans les formulaires et contrôleurs.
+    \item Utilisation de \texttt{$request->has('is_published')} pour fiabiliser la publication/dépublication.
+    \item Stockage des images dans \texttt{public/images/blog} avec génération de noms uniques.
+    \item Correction des liens d’accès aux images dans les vues.
+    \item Ajout de vérifications \texttt{auth()->check()} dans la navigation.
+\end{itemize}
+
+\subsection{Raisons du choix technique}
+\begin{itemize}
+    \item Respect des bonnes pratiques Laravel (Eloquent, validation, stockage public).
+    \item Robustesse accrue et gestion des cas limites (absence d’articles, utilisateur déconnecté).
+    \item Simplicité de maintenance et d’évolution.
+\end{itemize}
+
+\subsection{Contraintes rencontrées}
+\begin{itemize}
+    \item Contraintes de temps pour corriger et tester chaque cas.
+    \item Problèmes de compatibilité Windows/Linux pour le stockage des images.
+    \item Complexité de la gestion des états de publication.
+\end{itemize}
+
+% =====================
+\section{Validation de la correction}
+\subsection{Méthodes de tests utilisées}
+\begin{itemize}
+    \item Tests fonctionnels manuels de chaque action CRUD blog (création, édition, suppression, publication/dépublication).
+    \item Vérification de l’affichage correct des images et des statuts.
+    \item Tests de navigation et de sécurité (connexion/déconnexion, droits admin).
+    \item Utilisation de l’outil artisan pour vérifier la base de données et les migrations.
+\end{itemize}
+\subsection{Résultats obtenus}
+\begin{itemize}
+    \item Fonctionnalité blog entièrement restaurée, dynamique et fiable.
+    \item Plus d’erreurs 500 ou de bugs critiques.
+    \item Images accessibles et correctement affichées.
+    \item Navigation sécurisée pour tous les profils utilisateurs.
+\end{itemize}
+\subsection{Captures ou preuves techniques}
+\begin{itemize}
+    \item Capture d’écran de la liste des blogs dans l’admin (à insérer).
+    \item Exemple d’URL d’image fonctionnelle : \texttt{/images/blog/nom\_unique.jpg}
+\end{itemize}
+
+\subsection{Méthodes de tests utilisées}
+\begin{itemize}
+    \item Tests fonctionnels manuels de chaque action CRUD blog.
+    \item Vérification de l’affichage correct des images et des statuts.
+    \item Tests de navigation/déconnexion.
+    \item Utilisation de l’outil artisan pour vérifier la base de données et les migrations.
+\end{itemize}
+
+\subsection{Résultats obtenus après correction}
+\begin{itemize}
+    \item Plus d’erreurs 500 sur la page d’accueil.
+    \item Gestion dynamique et fiable des blogs.
+    \item Images accessibles et correctement affichées.
+    \item Navigation sécurisée pour les utilisateurs non connectés.
+\end{itemize}
+
+\subsection{Captures ou preuves techniques}
+\begin{itemize}
+    \item Capture d’écran de la liste des blogs dans l’admin.
+    \item Exemple d’URL d’image fonctionnelle : \texttt{/images/blog/nom\_unique.jpg}
+\end{itemize}
+
+% =====================
+\section{Bilan personnel}
+\subsection{Ce que cette correction m’a appris}
+Cette intervention m’a permis de comprendre l’importance d’une remise à plat complète lorsqu’un module est trop défaillant pour être corrigé partiellement. J’ai renforcé mes compétences sur Laravel (Eloquent, migrations, Blade, sécurité), la gestion des formulaires, l’intégration graphique et le diagnostic de bugs complexes.
+
+\subsection{Réflexion sur la qualité et la fiabilité}
+La qualité logicielle passe par l’anticipation des cas limites, la robustesse des contrôles, la cohérence graphique et la documentation des corrections. Une bonne gestion des erreurs améliore l’expérience utilisateur et la maintenabilité.
+
+\subsection{Propositions pour aller plus loin}
+\begin{itemize}
+    \item Ajouter des tests unitaires automatisés sur les contrôleurs et la logique de publication.
+    \item Mettre en place une CI/CD pour automatiser les déploiements et les tests.
+    \item Améliorer la gestion des médias (images, documents) avec une solution cloud.
+\end{itemize}
+
+\subsection{Ce que cette correction m’a appris}
+Cette intervention m’a permis de renforcer mes compétences sur Laravel, la gestion des formulaires, la validation, le stockage de fichiers et l’importance des tests fonctionnels.
+
+\subsection{Réflexion sur la qualité et la fiabilité}
+La qualité logicielle passe par l’anticipation des cas limites, la robustesse des contrôles et la documentation des corrections. Une bonne gestion des erreurs améliore l’expérience utilisateur et la maintenabilité.
+
+\subsection{Propositions pour aller plus loin}
+\begin{itemize}
+    \item Ajouter des tests unitaires automatisés sur les contrôleurs.
+    \item Mettre en place une CI/CD pour automatiser les déploiements et les tests.
+    \item Améliorer la gestion des médias (images, documents) avec une solution cloud.
+\end{itemize}
+
+\section*{Annexes}
+\addcontentsline{toc}{section}{Annexes}
+
+\subsection*{Extraits de code avant correction}
+\label{annexe:extraits_code}
+\begin{verbatim}
+// Mauvaise gestion du champ is_published
+$blog->is_published = $request->boolean('is_published');
+// Mauvais stockage des images
+$file->store('images/blog');
+// Navigation sans vérification d’authentification
+@if(Auth::user()->isAdmin())
+\end{verbatim}
+
+\end{document}
